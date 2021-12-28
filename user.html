@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <title>蟹逅稻香</title>
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black"> 
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="format-detection" content="telephone=no">
+  <script src="./public/echarts.min.js" charset="utf-8" type="text/javascript"></script>
+  <script src="./public/jquery-3.6.0.min.js" charset="utf-8" type="text/javascript"></script>
+  <script src="./public/data.js" charset="utf-8" type="text/javascript"></script>
+  <script src="./layui/layui.js" charset="utf-8" type="text/javascript"></script>
+  <link rel="stylesheet" href="./layui/css/layui.css" type="text/css">
+<style>
+  .layui-table-cell{
+    height:40px;
+    line-height: 40px;
+}
+</style>
+</head>
+<body class="layui-layout-body">
+
+<div class="layui-layout layui-layout-admin">
+  <div class="layui-header">
+    <div class="layui-logo" style="font-size: 16px;">“蟹逅稻香”用户中心</div>
+    <div style='width:100px;height:20px;position:fixed;right:50px;bottom:50px;z-index: 100;font-size: 14px;'>此网站仅为示意</div>
+    <ul class="layui-nav layui-layout-right">
+      <li class="layui-nav-item">
+        <a>
+           测试用户
+        </a>
+      </li>
+      <li class="layui-nav-item"><a href="javascript:logout();">退出</a></li>
+
+    </ul>
+
+  </div>
+  
+  <div class="layui-side layui-bg-black"  style="width:130px">
+    <div class="layui-side-scroll"  style="width:130px">
+      <ul class="layui-nav layui-nav-tree"  lay-filter="test"  style="width:130px">
+        <li class="layui-nav-item layui-nav-itemed">
+          <a href="" style="font-size: 16px;text-align: center;height:60px;line-height:60px">信息管理</a>
+        </li>
+        <li class="layui-nav-item layui-nav-itemed">
+            <a href="camera1.html" style="font-size: 16px;text-align: center;height:60px;line-height:60px">认养监控</a>
+        </li>
+        <li class="layui-nav-item layui-nav-itemed">
+            <a href="wuliu.html" style="font-size: 16px;text-align: center;height:60px;line-height:60px">物流查看</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+<div class="layui-body"  style="left:130px">
+<div>
+    <div id="wendu" style="width: 600px;height:400px;margin-top:20px;margin-left:20px;"></div>
+    <div id="map" style="width: 600px;height:500px;float: left;position: relative;left:700px;top:-400px;"></div>
+    <p style='float:left;position:absolute;left:800px;margin-top: 110px;'>认养蟹田地理经纬信息：<br>纬度：xxx°xxx'xxx''N&nbsp;&nbsp;经度xxx°xxx'xxx''E</p>
+    <div id="shidu" style="width: 600px;height:400px;margin-left:20px"></div>
+    <div style='clear: both;position: relative;top:-100px'>
+        <p class='p1'>灌溉记录</p>
+        <table id="demo1" lay-filter="demo1"></table>
+        <p class='p1'>施肥记录</p>
+        <table id="demo2" lay-filter="demo2"></table>
+        <style>
+            .p1{
+                font-size: 20px;
+                margin-left: 20px;
+            }
+        </style>
+    </div>
+</div>
+
+
+
+</div>
+  
+  <div class="layui-footer"  style="left:130px">
+        <label>“蟹逅稻香”——认养一亩蟹田项目组</label>
+  </div>
+
+</div>
+<script type="text/javascript">
+    var myChartwd = echarts.init(document.getElementById('wendu'));
+    var optionwd = {
+        title: {
+            text: '蟹田地表温度'
+        },
+        tooltip: {},
+        legend: {
+            data:['地表温度']
+        },
+        xAxis: {
+            data: ["06:00","07:00","08:00","09:00","10:00","11:00"]
+        },
+        yAxis: {},
+        color:'#EE5931',
+        series: [{
+            name: '地表温度（单位：摄氏度）',
+            type: 'line',
+            data: [-15.7,-15.3,-14.3,-13.8,-13.5,-13.5]
+        }]
+    };
+    myChartwd.setOption(optionwd);
+</script>
+<script type="text/javascript">
+    var myChartsd = echarts.init(document.getElementById('shidu'));
+    var optionsd = {
+        title: {
+            text: '蟹田地表湿度'
+        },
+        tooltip: {},
+        legend: {
+            data:['地表温度']
+        },
+        xAxis: {
+            data: ["06:00","07:00","08:00","09:00","10:00","11:00"]
+        },
+        yAxis: {},
+        color:'#3177EE',
+        series: [{
+            name: '地表湿度（单位：%rh）',
+            type: 'line',
+            data: [42,43,40,39,41,43]
+        }]
+    };
+    myChartsd.setOption(optionsd);
+</script>
+<script>
+echarts.registerMap('盘锦市', dawaqu); // 注册地图
+var mapChart = echarts.init(document.getElementById('map'));
+var option = {
+  title:[{
+    text:'盘锦市地图',
+    x:'center'
+  }],
+  series: [{
+    type: "map",
+    map:'盘锦市',
+    // center: [104.114129, 37.550339],//当前视角的中心点
+    zoom: 1, //当前视角的缩放比例
+    roam: true, //是否开启平游或缩放
+    scaleLimit: { //滚轮缩放的极限控制
+      min: 1,
+      max: 5
+    },
+  }]
+}
+mapChart.setOption(option);
+
+
+
+
+
+</script>
+
+
+
+<script>
+    layui.use('table', function(){
+      var table = layui.table;
+      table.render({
+        elem: '#demo1'
+        ,data:[{"id":1,"gg":"3000立方米","date":"2021-12-06"},
+        {"id":2,"gg":"3200立方米","date":"2021-12-13"},
+        {"id":3,"gg":"3100立方米","date":"2021-12-20"},
+        {"id":4,"gg":"3000立方米","date":"2021-12-27"}]
+        ,cols: [[
+          {field:'id', title: 'ID', sort:true, align:'center'}
+          ,{field:'gg', title: '灌溉量',align:'center'}
+          ,{field:'date',title: '日期', align:'center'}
+        ]],
+        initSort:{
+            field:'id'
+            ,type:'desc'
+        },
+      });
+    });
+</script>
+<script>
+    layui.use('table', function(){
+      var table = layui.table;
+      table.render({
+        elem: '#demo2'
+        ,data:[{"id":1,"gg":"1000立方米","date":"2021-12-06"},
+        {"id":2,"gg":"1200立方米","date":"2021-12-13"},
+        {"id":3,"gg":"1100立方米","date":"2021-12-20"},
+        {"id":4,"gg":"1000立方米","date":"2021-12-27"}]
+        ,cols: [[
+          {field:'id', title: 'ID', sort:true, align:'center'}
+          ,{field:'gg', title: '施肥量',align:'center'}
+          ,{field:'date',title: '日期', align:'center'}
+        ]],
+        initSort:{
+            field:'id'
+            ,type:'desc'
+        },
+      });
+    });
+</script>
+<script>
+        /*<![CDATA[*/
+        function logout() {
+            layer.confirm('您确定要退出系统吗？',{
+                btn:['确定','取消']
+            }, function () {
+                window.location.href="./index.html";
+            });
+        }
+</script>
+    </body>
+    </html>

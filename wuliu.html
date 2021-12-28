@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <title>蟹逅稻香</title>
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black"> 
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="format-detection" content="telephone=no">
+  <script src="./public/echarts.min.js" charset="utf-8" type="text/javascript"></script>
+  <script src="./public/jquery.js" charset="utf-8" type="text/javascript"></script>
+  <script src="./layui/layui.js" charset="utf-8" type="text/javascript"></script>
+  <script src="./public/china.js"></script>
+  <link rel="stylesheet" href="./layui/css/layui.css" type="text/css">
+<style>
+  .layui-table-cell{
+    height:40px;
+    line-height: 40px;
+}
+</style>
+<style>
+    .videoArea {
+      width: 100%;
+      height: 530px;
+      margin:0 auto;
+    }
+    .videoArea > video {
+      height: 530px;
+      width: 1200px;
+      margin:0 auto;
+    }
+  </style>
+</head>
+<body class="layui-layout-body">
+<div class="layui-layout layui-layout-admin">
+  <div class="layui-header">
+    <div class="layui-logo" style="font-size: 16px;">“蟹逅稻香”用户中心</div>
+
+    <ul class="layui-nav layui-layout-right">
+      <li class="layui-nav-item">
+        <a>
+           测试用户
+        </a>
+      </li>
+      <li class="layui-nav-item"><a href="javascript:logout();">退出</a></li>
+
+    </ul>
+
+  </div>
+  
+  <div class="layui-side layui-bg-black"  style="width:130px">
+    <div class="layui-side-scroll"  style="width:130px">
+      <ul class="layui-nav layui-nav-tree"  lay-filter="test"  style="width:130px">
+        <li class="layui-nav-item layui-nav-itemed">
+          <a href="user.html" style="font-size: 16px;text-align: center;height:60px;line-height:60px">信息管理</a>
+        </li>
+        <li class="layui-nav-item layui-nav-itemed">
+            <a href="camera1.html" style="font-size: 16px;text-align: center;height:60px;line-height:60px">认养监控</a>
+        </li>
+        <li class="layui-nav-item layui-nav-itemed">
+            <a href="" style="font-size: 16px;text-align: center;height:60px;line-height:60px">物流查看</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+<div class="layui-body"  style="left:130px">
+  <div style='width:100px;height:20px;position:fixed;right:50px;bottom:50px;z-index: 100;font-size: 14px;'>此网站仅为示意</div>
+  <div id="main" style="width:100%;height:100%" class='map'></div>
+</div>
+  
+  <div class="layui-footer"  style="left:130px">
+        <label>“蟹逅稻香”——认养一亩蟹田项目组</label>
+  </div>
+
+</div>
+
+<script>
+    var myChart = echarts.init(document.getElementById('main'));
+    // 数据格式 地图上标点为citys，value为经纬度，symbolSize为标记点的大小
+    // 数据格式 moveLines，fromName为线条出发城市，toName为线条到达城市，coords为数组经纬度，第一个为出发点经纬度，第二个为到达点经纬度
+ 
+ 
+    var allData = {
+　　　　"citys":[
+        {"name":"大洼区","value":[122.071708,40.994428],"symbolSize":20,"itemStyle":{"normal":{"color":"#F58158"}}},
+        {"name":"长春","value":[125.323544,43.817072,8],"symbolSize":2,"itemStyle":{"normal":{"color":"#F58158"}}}
+      ],
+      "moveLines":[
+        {"fromName":"大洼区","toName":"长春","coords":[[122.071708,40.994428],[125.323544,43.817072,8]]},
+      ]
+    };
+ 
+    option = {
+        backgroundColor: '#fff', // 地图背景颜色
+        title: {
+            text: '物流位置', // 地图标题设置
+            padding:5, // 标题内边距 5  [5, 10]  [5,10,5,10]
+            left:"center", // 组件离容器左侧的距离,'left', 'center', 'right','20%'
+            top:"5%", // 组件离容器上侧的距离,'top', 'middle', 'bottom','20%'
+            right:"auto", // 组件离容器右侧的距离,'20%'
+            bottom:"auto", // 组件离容器下侧的距离,'20%'
+            textStyle: {
+              color:"#000", //文字颜色
+              fontStyle:"normal", // italic斜体  oblique倾斜
+              fontWeight:"normal", // 文字粗细bold   bolder   lighter  100 | 200 | 300 | 400...
+              fontFamily:"sans-serif", // 字体系列
+              fontSize:18, // 字体大小
+            }
+        },
+        legend: { // 右下角图例
+            show: false, // 是否显示
+            orient: 'vertical', // 图例排列方向
+            top: 'bottom', // 位置
+            left: 'right', // 位置
+            data: ['地点', '线路'], // 数据
+            textStyle: { // 文字设置
+                color: '#fff'
+            }
+        },
+        geo: {
+            show:true, // 是否显示
+            map: 'china', // 地图类型。world世界地图，china中国地图
+          // center:[115.97, 29.71], //当前视角的中心点，用经纬度表示
+            label: {
+              normal:{ //普通状态下的标签文本样式。(省份名称)
+                show: false, //是否在普通状态下显示标签。
+                textStyle: { // 文字设置
+                  color: '#fff'
+                },
+              },
+              emphasis: { // 是否在高亮状态下显示标签。(省份名称)
+                show: true,
+                textStyle: { // 文字设置
+                  color: '#fff'
+                },
+              }
+            },
+            roam: true, // 是否开启鼠标缩放和平移漫游。默认不开启。如果只想要开启缩放或者平移，可以设置成 'scale' 或者 'move'。设置成 true 为都开启
+            itemStyle: { // 地图板块区域的多边形 图形样式
+                normal: { // 默认板块信息
+                    areaColor: '#BFBFBF',
+                    borderColor: '#515151'
+                },
+                emphasis: { // 高亮版板块信息
+                    areaColor: '#3177EE'
+                }
+            }
+        },
+        series: [{
+            name: '地点',
+            type: 'effectScatter', // 特效散点图
+            coordinateSystem: 'geo', // 'cartesian2d'使用二维的直角坐标系。'geo'使用地理坐标系
+            zlevel: 1, // 所有图形的 zlevel 值。
+            rippleEffect: { //涟漪特效相关配置。
+                brushType: 'stroke', //波纹的绘制方式，可选 'stroke' 和 'fill'。
+                period:4, // 动画的时间。
+                scale:2.5, // 动画中波纹的最大缩放比例。
+            },
+            label: {
+                normal: {
+                  show: false,                  //是否显示标签。
+                  position: "inside",          //标签的位置。// 绝对的像素值[10, 10]
+                  offset: [15, 20],             //是否对文字进行偏移。默认不偏移。例如：[30, 40] 表示文字在横向上偏移 30，纵向上偏移 40。
+                  formatter: '{b}: {c}',       //标签内容格式器。模板变量有 {a}、{b}、{c}，分别表示系列名，数据名，数据值。
+                },
+                emphasis: {
+                    show: true,
+                    position: 'right',
+                    formatter: '{b}'
+                }
+            },
+            symbolSize: 2, // 标记的大小，可以设置成诸如 10 这样单一的数字，也可以用数组分开表示宽和高，例如 [20, 10] 表示标记宽为20，高为10。
+            showEffectOn: 'render', // 配置何时显示特效。可选：'render' 绘制完成后显示特效。'emphasis' 高亮（hover）的时候显示特效。
+            itemStyle: { // 图形样式，normal 是图形在默认状态下的样式；emphasis 是图形在高亮状态下的样式，比如在鼠标悬浮或者图例联动高亮时。
+                normal: {
+                    color: '#E00707'
+                }
+            },
+            data: allData.citys,
+        }, {
+            name: '线路',
+            type: 'lines',
+            coordinateSystem: 'geo', // 'cartesian2d'使用二维的直角坐标系。'geo'使用地理坐标系
+            zlevel: 2,
+            large: true, // 是否开启大规模散点图的优化，在数据图形特别多的时候（>=5k）可以开启。开启后配合 largeThreshold 在数据量大于指定阈值的时候对绘制进行优化。缺点：优化后不能自定义设置单个数据项的样式。
+            effect: {
+                show: true,
+                constantSpeed: 30, // 点移动的速度
+                symbol: 'pin',  // 图形 'circle', 'rect', 'roundRect', 'triangle', 'diamond', 'pin', 'arrow'
+                symbolSize: 5, // 标记的大小，可以设置成诸如 10 这样单一的数字，也可以用数组分开表示宽和高，例如 [20, 10] 表示标记宽为20，高为10。
+                trailLength: 0, // 线的宽度
+            },
+            lineStyle: { // 线的颜色、宽度，样式设置
+                normal: {
+                    color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                        offset: 0, color: '#E00707'
+                    }, {
+                        offset: 1, color: '#E00707'
+                    }], false),
+                    width: 2, // 线的宽度
+                    opacity: 0.5, // 线的透明度
+                    curveness: 0.1 // 线的完全程度
+                }
+            },
+            data: allData.moveLines
+        }]
+    };
+    myChart.setOption(option);
+</script>
+</script>
+<script>
+        /*<![CDATA[*/
+        function logout() {
+            layer.confirm('您确定要退出系统吗？',{
+                btn:['确定','取消']
+            }, function () {
+                window.location.href="./index.html";
+            });
+        }
+</script>
+    </body>
+    </html>
