@@ -1,0 +1,20 @@
+.wunewslist2{
+	font-family: Microsoft YaHei; overflow: hidden;position: relative;
+}
+.wunewslist2 .bg{position: absolute; left: 0; top: 0; height: 100%; width: 100%;}
+.wunewslist2 ul{position: relative;}
+.wunewslist2 li{position: relative;
+    padding-top: 12px; padding-bottom: 12px;  margin: 10px 0; height: 130px;
+    border-bottom: 1px dotted #cccccc;}
+.wunewslist2 .lc{position: absolute;  line-height: 130px; left: 0;
+    width: 140px; text-align: center;}
+.wunewslist2 .con{
+	margin-left: 150px;
+}
+.wunewslist2 a{text-decoration: none;}
+.wunewslist2 .title{margin-bottom: 5px;}
+.wunewslist2 .title a{ 
+    font-size: 16px; color: #333;
+}
+.wunewslist2 .title a:hover{color:#d3b167;}
+.wunewslist2 .memo{color: #999; font-size: 12px; padding-top: 3px;}

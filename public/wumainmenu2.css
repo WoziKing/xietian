@@ -1,0 +1,4 @@
+.wumainmenu2{ font-family: "微软雅黑"; overflow: hidden;}
+.wumainmenu2 li{float: left;}
+.wumainmenu2 a{display: block; text-decoration:  none; color: #333; width: 120px; font-size: 14px;
+line-height: 40px; text-align: center; margin-right: 20px; border: 1px solid #000;}
