@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <title>蟹逅稻香</title>
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black"> 
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="format-detection" content="telephone=no">
+  <script src="./public/echarts.min.js" charset="utf-8" type="text/javascript"></script>
+  <script src="./public/jquery.js" charset="utf-8" type="text/javascript"></script>
+  <script src="./layui/layui.js" charset="utf-8" type="text/javascript"></script>
+  <link rel="stylesheet" href="./layui/css/layui.css" type="text/css">
+<style>
+  .layui-table-cell{
+    height:40px;
+    line-height: 40px;
+}
+</style>
+<style>
+    .videoArea {
+      width: 100%;
+      height: 530px;
+      margin:0 auto;
+    }
+    .videoArea > video {
+      height: 530px;
+      width: 1200px;
+      margin:0 auto;
+    }
+  </style>
+</head>
+<body class="layui-layout-body">
+<div class="layui-layout layui-layout-admin">
+  <div class="layui-header">
+    <div class="layui-logo" style="font-size: 16px;">“蟹逅稻香”用户中心</div>
+    <div style='width:100px;height:20px;position:fixed;right:50px;bottom:50px;z-index: 100;font-size: 14px;'>此网站仅为示意</div>
+    <ul class="layui-nav layui-layout-right">
+      <li class="layui-nav-item">
+        <a>
+           测试用户
+        </a>
+      </li>
+      <li class="layui-nav-item"><a href="javascript:logout();">退出</a></li>
+
+    </ul>
+
+  </div>
+  
+  <div class="layui-side layui-bg-black"  style="width:130px">
+    <div class="layui-side-scroll"  style="width:130px">
+      <ul class="layui-nav layui-nav-tree"  lay-filter="test"  style="width:130px">
+        <li class="layui-nav-item layui-nav-itemed">
+          <a href="user.html" style="font-size: 16px;text-align: center;height:60px;line-height:60px">信息管理</a>
+        </li>
+        <li class="layui-nav-item layui-nav-itemed">
+            <a href="" style="font-size: 16px;text-align: center;height:60px;line-height:60px">认养监控</a>
+        </li>
+        <li class="layui-nav-item layui-nav-itemed">
+            <a href="wuliu.html" style="font-size: 16px;text-align: center;height:60px;line-height:60px">物流查看</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+<div class="layui-body"  style="left:130px">
+    <h2 style='position: relative;top:10px;left:10px'>视频图像区</h2>
+    <div class="videoArea">
+        <input
+          type="button"
+          title="开启摄像头"
+          value="开启摄像头"
+          style='margin-left:0px;'
+          onclick="getMedia()"
+        />
+        <video id="myVideo" autoplay="autoplay"></video>      
+      </div>
+
+
+      <script>
+        function getMedia() {
+          let constraints = {
+            video: { width: 900, height: 500 },
+            audio: false
+          };
+          let video = document.getElementById("myVideo");
+          console.log(navigator);
+          let promise = navigator.mediaDevices.getUserMedia(constraints);
+          promise.then(function(MediaStream) {
+            video.srcObject = MediaStream;
+            video.play();
+          });
+        }
+  
+      </script>
+</div>
+  
+  <div class="layui-footer"  style="left:130px">
+        <label>“蟹逅稻香”——认养一亩蟹田项目组</label>
+  </div>
+
+</div>
+
+<script>
+        /*<![CDATA[*/
+        function logout() {
+            layer.confirm('您确定要退出系统吗？',{
+                btn:['确定','取消']
+            }, function () {
+                window.location.href="./index.html";
+            });
+        }
+</script>
+    </body>
+    </html>
